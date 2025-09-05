@@ -3,14 +3,13 @@
 {% block title %}Search Results - dotCom{% endblock %}
 
 {% block content %}
-  <h1 class="mb-4">Search Results for "{{ query }}"</h1>
-  {% if tweets %}
+  <h1 class="mb-4">Search Results for "{{ searched }}"</h1>
+  {% if searched %}
     <div class="list-group">
-      {% for tweet in tweets %}
+      {% for tweet in result %}
         <div class="list-group-item mb-3">
           <h5 class="mb-1">{{ tweet.user.username }} <small class="text-muted">{{ tweet.created_at|date:"M d, Y H:i" }}</small></h5>
-          <p class="mb-1">{{ tweet.content }}</p>
-            <a href="{% url 'tweet_detail' tweet.id %}" class="btn btn-sm btn-primary">View Details</a>
+          <p class="mb-1">{{ tweet.text }}</p>
             {% if user.is_authenticated and tweet.user == user %}
               <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-secondary">Edit</a>
               <form action="{% url 'tweet_delete' tweet.id %}" method="post" class="d-inline">

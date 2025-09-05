@@ -55,4 +55,9 @@ def register(request):
     return render(request, 'registration/register.html',{'form': form})
 
 def search_results(request):
-    return render(request, 'search_results.html',{})
+    if request.method == "POST":
+        searched = request.POST['searched']
+        result = Tweet.objects.filter(text__icontains = searched)    
+        return render(request, 'search_results.html',{'result': result, 'searched': searched})
+    else:
+        return render(request, 'search_results.html',{'result': [], 'searched': ''})

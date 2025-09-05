@@ -26,9 +26,9 @@
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                 </ul>
-                <form class="d-flex" role="search" method=POST action="{% url 'search_results' %}">
+                <form class="d-flex" method=POST action="{% url 'search_results' %}">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched"/>
                     <button class="btn btn-outline-secondary" type="submit">Search</button>
                 </form>
                 <a href="{% url 'tweet_list' %}" class="btn btn-primary mx-2">Tweets</a>
