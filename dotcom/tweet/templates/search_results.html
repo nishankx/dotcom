@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - dotCom{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Search Results for "{{ query }}"</h1>
+  {% if tweets %}
+    <div class="list-group">
+      {% for tweet in tweets %}
+        <div class="list-group-item mb-3">
+          <h5 class="mb-1">{{ tweet.user.username }} <small class="text-muted">{{ tweet.created_at|date:"M d, Y H:i" }}</small></h5>
+          <p class="mb-1">{{ tweet.content }}</p>
+            <a href="{% url 'tweet_detail' tweet.id %}" class="btn btn-sm btn-primary">View Details</a>
+            {% if user.is_authenticated and tweet.user == user %}
+              <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-secondary">Edit</a>
+              <form action="{% url 'tweet_delete' tweet.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No tweets found matching your search criteria.</p>
+  {% endif %}
+    <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary mt-3">Back to Tweets</a>
+{% endblock %}
